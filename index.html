@@ -3,309 +3,204 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Salon Zaz Look | L'Excellence au Féminin</title>
+    <title>Salon Zaz Look - Expérience 3D Premium</title>
     <script src="https://cdn.tailwindcss.com"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;1,400&family=Montserrat:wght@300;400;600&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://unpkg.com/lucide@latest"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,700;1,700&family=Plus+Jakarta+Sans:wght@300;400;600&display=swap" rel="stylesheet">
     <style>
+        /* Fond et thème sombre avec dégradé radial */
         body {
-            font-family: 'Montserrat', sans-serif;
-            scroll-behavior: smooth;
+            font-family: 'Plus Jakarta Sans', sans-serif;
+            background: radial-gradient(circle at top, #1a1a1a 0%, #050505 100%);
+            color: #ffffff;
+            overflow-x: hidden;
         }
-        h1, h2, h3, .serif {
-            font-family: 'Playfair Display', serif;
+
+        .serif { font-family: 'Playfair Display', serif; }
+
+        /* Animation de flottaison du logo principal */
+        @keyframes float {
+            0%, 100% { transform: translateY(0px); }
+            50% { transform: translateY(-10px); }
         }
-        .gold-gradient {
-            background: linear-gradient(135deg, #d4af37 0%, #f9f295 50%, #b8860b 100%);
+
+        /* Animation de balayage doré sur le texte (Shimmer) */
+        @keyframes shimmer {
+            0% { background-position: -200% center; }
+            100% { background-position: 200% center; }
         }
-        .gold-text {
-            background: linear-gradient(135deg, #d4af37 0%, #b8860b 100%);
+
+        .animate-float { animation: float 4s ease-in-out infinite; }
+        
+        .animate-text-shimmer {
+            background: linear-gradient(90deg, #b8860b, #f9e2af, #b8860b, #f9e2af, #b8860b);
+            background-size: 200% auto;
+            color: transparent;
             -webkit-background-clip: text;
-            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: shimmer 4s linear infinite;
         }
-        .bg-charcoal {
-            background-color: #1a1a1a;
-        }
-        .glass {
+        
+        /* Design des cartes en verre 3D (Glassmorphism) */
+        .glass-3d {
             background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(10px);
+            backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, 0.1);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
         }
-        .nav-scrolled {
-            background: rgba(26, 26, 26, 0.95);
-            padding-top: 0.5rem;
-            padding-bottom: 0.5rem;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.3);
+
+        .glass-3d:hover {
+            transform: translateY(-8px) scale(1.02) rotateX(5deg);
+            background: rgba(255, 255, 255, 0.08);
+            border-color: rgba(212, 175, 55, 0.4);
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 0 0 15px rgba(212, 175, 55, 0.2);
         }
+
+        /* Boîtes d'icônes avec effet de rotation au survol */
+        .icon-box {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border-radius: 16px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+            transition: transform 0.5s ease;
+            overflow: hidden;
+        }
+        
+        .glass-3d:hover .icon-box { transform: rotateY(180deg); }
+
+        /* Couleurs spécifiques aux réseaux et marques */
+        .insta-gradient { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
+        .wa-color { background: #25D366; }
     </style>
 </head>
-<body class="bg-charcoal text-gray-200">
+<body class="min-h-screen flex items-center justify-center p-4">
 
-    <!-- Navigation -->
-    <nav id="navbar" class="fixed w-full z-50 transition-all duration-300 py-6 px-6 md:px-12 flex justify-between items-center">
-        <div class="text-2xl font-bold tracking-widest gold-text serif">SALON ZAZ LOOK</div>
-        
-        <!-- Mobile Menu Toggle -->
-        <div class="md:hidden">
-            <button id="menu-btn" class="text-white text-2xl"><i class="fas fa-bars"></i></button>
-        </div>
-
-        <ul class="hidden md:flex space-x-8 uppercase text-xs tracking-widest font-semibold">
-            <li><a href="#home" class="hover:text-amber-400 transition">Accueil</a></li>
-            <li><a href="#services" class="hover:text-amber-400 transition">Tarifs</a></li>
-            <li><a href="#about" class="hover:text-amber-400 transition">À Propos</a></li>
-            <li><a href="#contact" class="hover:text-amber-400 transition">Contact</a></li>
-        </ul>
-        
-        <a href="https://wa.me/21263875803" target="_blank" class="hidden md:block gold-gradient text-black px-6 py-2 rounded-full text-xs font-bold uppercase tracking-tighter hover:scale-105 transition transform">
-            Prendre RDV
-        </a>
-    </nav>
-
-    <!-- Mobile Menu Overlay -->
-    <div id="mobile-menu" class="fixed inset-0 bg-black z-40 flex flex-col items-center justify-center space-y-8 text-2xl hidden">
-        <button id="close-btn" class="absolute top-8 right-8 text-3xl"><i class="fas fa-times"></i></button>
-        <a href="#home" class="mobile-link">Accueil</a>
-        <a href="#services" class="mobile-link">Tarifs</a>
-        <a href="#about" class="mobile-link">À Propos</a>
-        <a href="#contact" class="mobile-link">Contact</a>
-    </div>
-
-    <!-- Hero Section -->
-    <section id="home" class="relative h-screen flex items-center justify-center overflow-hidden">
-        <!-- Background Overlay -->
-        <div class="absolute inset-0 bg-black/60 z-10"></div>
-        <!-- Image Background (Placeholder for a high-end salon photo) -->
-        <img src="https://images.unsplash.com/photo-1560066984-138dadb4c035?auto=format&fit=crop&q=80&w=2000" alt="Salon Background" class="absolute inset-0 w-full h-full object-cover">
-        
-        <div class="relative z-20 text-center px-4 max-w-4xl">
-            <span class="uppercase tracking-[0.5em] text-amber-400 text-sm mb-4 block">L'art de la beauté</span>
-            <h1 class="text-5xl md:text-8xl font-bold mb-6 serif leading-tight">Salon Zaz Look</h1>
-            <p class="text-lg md:text-xl font-light mb-10 text-gray-300 max-w-2xl mx-auto">Vivez une expérience capillaire d'exception. Nous sublimons votre beauté naturelle avec des soins professionnels de haute qualité.</p>
-            <div class="flex flex-col sm:flex-row gap-4 justify-center">
-                <a href="https://wa.me/21263875803" target="_blank" class="gold-gradient text-black px-10 py-4 rounded-full font-bold uppercase tracking-widest hover:shadow-[0_0_20px_rgba(212,175,55,0.4)] transition">
-                    <i class="fab fa-whatsapp mr-2"></i> WhatsApp
-                </a>
-                <a href="#services" class="border border-amber-400 text-amber-400 px-10 py-4 rounded-full font-bold uppercase tracking-widest hover:bg-amber-400 hover:text-black transition">
-                    Nos Tarifs
-                </a>
-            </div>
-        </div>
-
-        <!-- Floating Scroll Indicator -->
-        <div class="absolute bottom-10 left-1/2 transform -translate-x-1/2 z-20 animate-bounce">
-            <i class="fas fa-chevron-down text-amber-400 text-xl"></i>
-        </div>
-    </section>
-
-    <!-- Stats/Features -->
-    <section class="py-20 bg-black">
-        <div class="container mx-auto px-6 grid grid-cols-2 md:grid-cols-4 gap-8 text-center">
-            <div>
-                <div class="text-4xl font-bold gold-text serif mb-2">10+</div>
-                <div class="text-xs uppercase tracking-widest text-gray-500">Années d'Expérience</div>
-            </div>
-            <div>
-                <div class="text-4xl font-bold gold-text serif mb-2">5k+</div>
-                <div class="text-xs uppercase tracking-widest text-gray-500">Clientes Satisfaites</div>
-            </div>
-            <div>
-                <div class="text-4xl font-bold gold-text serif mb-2">100%</div>
-                <div class="text-xs uppercase tracking-widest text-gray-500">Produits Pro</div>
-            </div>
-            <div>
-                <div class="text-4xl font-bold gold-text serif mb-2">4.9/5</div>
-                <div class="text-xs uppercase tracking-widest text-gray-500">Google Avis</div>
-            </div>
-        </div>
-    </section>
-
-    <!-- Services & Pricing -->
-    <section id="services" class="py-24 bg-charcoal">
-        <div class="container mx-auto px-6">
-            <div class="text-center mb-16">
-                <h2 class="text-4xl md:text-6xl font-bold mb-4 serif">Nos Tarifs</h2>
-                <div class="w-24 h-1 gold-gradient mx-auto mb-6"></div>
-                <p class="text-gray-400 uppercase tracking-widest text-sm">Qualité et Prestige à chaque prestation</p>
-            </div>
-
-            <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-                <!-- Service 1 -->
-                <div class="glass p-8 rounded-2xl border-t-4 border-amber-500 hover:translate-y-[-10px] transition duration-300">
-                    <div class="bg-amber-500/10 w-16 h-16 rounded-full flex items-center justify-center mb-6">
-                        <i class="fas fa-wind text-2xl text-amber-500"></i>
+    <div class="w-full max-w-md py-10">
+        <!-- En-tête avec Logo Animé -->
+        <div class="text-center mb-12">
+            <div class="relative inline-block animate-float">
+                <div class="w-28 h-28 rounded-full p-1 bg-gradient-to-tr from-[#b8860b] via-[#f9e2af] to-[#d4af37] shadow-[0_0_30px_rgba(212,175,55,0.3)]">
+                    <div class="w-full h-full rounded-full bg-black overflow-hidden border-2 border-black flex items-center justify-center">
+                        <img src="https://i.postimg.cc/9f6RtNS9/photo-5884097001182399774-y.jpg" 
+                             alt="Logo Salon Zaz Look" 
+                             class="w-full h-full object-cover">
                     </div>
-                    <h3 class="text-2xl font-bold mb-2 serif">Brushing</h3>
-                    <p class="text-gray-400 text-sm mb-6">Soin et lissage pour une tenue parfaite et brillante.</p>
-                    <div class="text-3xl font-bold gold-text serif">100 DH</div>
                 </div>
-
-                <!-- Service 2 -->
-                <div class="glass p-8 rounded-2xl border-t-4 border-amber-500 hover:translate-y-[-10px] transition duration-300">
-                    <div class="bg-amber-500/10 w-16 h-16 rounded-full flex items-center justify-center mb-6">
-                        <i class="fas fa-hand-sparkles text-2xl text-amber-500"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-2 serif">Nails / Ongles</h3>
-                    <p class="text-gray-400 text-sm mb-6">Manucure soignée et pose de vernis professionnel.</p>
-                    <div class="text-3xl font-bold gold-text serif">100 DH</div>
-                </div>
-
-                <!-- Service 3 -->
-                <div class="glass p-8 rounded-2xl border-t-4 border-amber-500 hover:translate-y-[-10px] transition duration-300">
-                    <div class="bg-amber-500/10 w-16 h-16 rounded-full flex items-center justify-center mb-6">
-                        <i class="fas fa-palette text-2xl text-amber-500"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-2 serif">Coloration</h3>
-                    <p class="text-gray-400 text-sm mb-6">Des nuances vibrantes qui respectent votre fibre capillaire.</p>
-                    <div class="text-3xl font-bold gold-text serif">250 DH</div>
-                </div>
-
-                <!-- Service 4 -->
-                <div class="glass p-8 rounded-2xl border-t-4 border-amber-500 hover:translate-y-[-10px] transition duration-300">
-                    <div class="bg-amber-500/10 w-16 h-16 rounded-full flex items-center justify-center mb-6">
-                        <i class="fas fa-magic text-2xl text-amber-500"></i>
-                    </div>
-                    <h3 class="text-2xl font-bold mb-2 serif">Soin Protéine</h3>
-                    <p class="text-gray-400 text-sm mb-6">Traitement intensif pour une réparation en profondeur.</p>
-                    <div class="text-3xl font-bold gold-text serif">900 DH</div>
-                </div>
-            </div>
-
-            <div class="mt-16 text-center">
-                <p class="text-gray-400 italic mb-8">Et bien plus de soins disponibles en salon...</p>
-                <a href="https://wa.me/21263875803" class="inline-flex items-center space-x-2 text-amber-400 hover:text-white transition group">
-                    <span class="uppercase tracking-widest font-bold">Consulter la carte complète</span>
-                    <i class="fas fa-arrow-right transition group-hover:translate-x-2"></i>
-                </a>
-            </div>
-        </div>
-    </section>
-
-    <!-- Google Reviews Section -->
-    <section class="py-24 bg-black relative overflow-hidden">
-        <div class="container mx-auto px-6 relative z-10 text-center">
-            <div class="mb-10">
-                <i class="fab fa-google text-5xl text-blue-500 mb-4"></i>
-                <h2 class="text-3xl md:text-5xl font-bold serif mb-6">L'avis de nos Clientes</h2>
+                <!-- Indicateur de statut en ligne pulsant -->
+                <div class="absolute -bottom-1 -right-1 bg-green-500 w-6 h-6 rounded-full border-4 border-[#0a0a0a] shadow-lg animate-pulse"></div>
             </div>
             
-            <div class="flex flex-wrap justify-center gap-6 mb-12">
-                <div class="glass p-6 rounded-xl max-w-xs text-left">
-                    <div class="flex text-amber-400 mb-4">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
-                    <p class="text-sm italic text-gray-300 mb-4">"Service impeccable, le brushing tient super bien et l'accueil est chaleureux. Je recommande vivement !"</p>
-                    <span class="font-bold text-white">— Sara B.</span>
-                </div>
-                <div class="glass p-6 rounded-xl max-w-xs text-left">
-                    <div class="flex text-amber-400 mb-4">
-                        <i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i><i class="fas fa-star"></i>
-                    </div>
-                    <p class="text-sm italic text-gray-300 mb-4">"La meilleure coloration que j'ai faite. Salon très pro et hygiène au top."</p>
-                    <span class="font-bold text-white">— Amina K.</span>
-                </div>
+            <!-- Titre sur une seule ligne avec animation shimmer -->
+            <div class="mt-6 flex justify-center overflow-hidden px-2">
+                <h1 class="serif text-3xl sm:text-4xl lg:text-5xl animate-text-shimmer tracking-widest uppercase text-center leading-tight whitespace-nowrap drop-shadow-lg">
+                    SALON ZAZ LOOK
+                </h1>
             </div>
+            <p class="text-gray-400 text-xs mt-3 uppercase tracking-[0.4em] font-light italic">L'Art de la Beauté Femme</p>
+        </div>
 
-            <a href="https://www.google.com/search?q=Salon+Zaz+Look+avis" target="_blank" class="inline-block bg-white text-black px-8 py-3 rounded-lg font-bold hover:bg-gray-200 transition">
-                <i class="fab fa-google mr-2"></i> Voir tous les avis Google
+        <!-- Grille de Navigation Interactive -->
+        <div class="grid grid-cols-2 gap-5 px-2">
+            
+            <!-- WhatsApp (Toujours en haut pour le contact prioritaire) -->
+            <a href="https://wa.me/212638753803" target="_blank" class="col-span-2 glass-3d flex items-center p-6 rounded-[2rem] group border-[#25D366]/30">
+                <div class="w-14 h-14 icon-box wa-color text-white shadow-lg shadow-green-900/40">
+                    <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                    </svg>
+                </div>
+                <div class="ml-5">
+                    <span class="block font-bold text-lg text-white">WhatsApp</span>
+                    <span class="text-[10px] text-green-300 uppercase tracking-widest font-semibold italic">Contact direct</span>
+                </div>
+                <i data-lucide="chevron-right" class="ml-auto w-5 h-5 text-gray-600 group-hover:text-green-400 transition-colors"></i>
             </a>
-        </div>
-    </section>
 
-    <!-- Socials & Contact -->
-    <section id="contact" class="py-24 bg-charcoal">
-        <div class="container mx-auto px-6">
-            <div class="grid md:grid-cols-2 gap-16 items-center">
-                <div>
-                    <h2 class="text-4xl font-bold mb-6 serif">Restons Connectés</h2>
-                    <p class="text-gray-400 mb-8 leading-relaxed">Suivez-nous pour découvrir nos dernières créations, avant/après, et profiter de nos offres exclusives.</p>
-                    
-                    <div class="space-y-6">
-                        <div class="flex items-center space-x-4">
-                            <div class="w-12 h-12 rounded-full border border-amber-500 flex items-center justify-center text-amber-500 text-xl">
-                                <i class="fab fa-instagram"></i>
-                            </div>
-                            <div>
-                                <div class="text-xs text-gray-500 uppercase">Instagram</div>
-                                <a href="https://instagram.com/salon_zaz_look" target="_blank" class="text-xl font-semibold hover:text-amber-400 transition">@salon_zaz_look</a>
-                            </div>
-                        </div>
-                        <div class="flex items-center space-x-4">
-                            <div class="w-12 h-12 rounded-full border border-amber-500 flex items-center justify-center text-amber-500 text-xl">
-                                <i class="fab fa-whatsapp"></i>
-                            </div>
-                            <div>
-                                <div class="text-xs text-gray-500 uppercase">WhatsApp</div>
-                                <a href="https://wa.me/21263875803" target="_blank" class="text-xl font-semibold hover:text-amber-400 transition">+212 638 758 03</a>
-                            </div>
-                        </div>
-                    </div>
+            <!-- Tarifs Esthétique (Côté gauche) -->
+            <a href="#" class="glass-3d aspect-square flex flex-col items-center justify-center p-4 rounded-[2rem] group border-pink-500/20 text-center">
+                <div class="w-14 h-14 icon-box bg-white shadow-lg shadow-pink-900/40 border-2 border-pink-500/30 mb-3">
+                    <img src="https://i.postimg.cc/fRLQBWnj/IMG-9075.jpg" alt="Icône Esthétique" class="w-full h-full object-cover">
                 </div>
+                <span class="block font-bold text-sm text-white leading-tight">Tarifs<br>Esthétique</span>
+                <span class="text-[8px] text-pink-300 uppercase tracking-widest mt-1">Soins Beauté</span>
+            </a>
 
-                <div class="glass p-10 rounded-3xl">
-                    <h3 class="text-2xl font-bold mb-6 serif">Horaires d'Ouverture</h3>
-                    <ul class="space-y-4 text-gray-300">
-                        <li class="flex justify-between border-b border-white/10 pb-2">
-                            <span>Lundi - Samedi</span>
-                            <span class="text-amber-400">09:30 – 20:00</span>
-                        </li>
-                        <li class="flex justify-between border-b border-white/10 pb-2">
-                            <span>Dimanche</span>
-                            <span class="text-amber-400">10:00 – 18:00</span>
-                        </li>
-                    </ul>
-                    <div class="mt-10">
-                        <p class="text-sm text-gray-500 mb-4 uppercase tracking-widest text-center">Localisation</p>
-                        <div class="w-full h-48 rounded-xl bg-gray-800 flex items-center justify-center">
-                           <span class="text-gray-500 italic"><i class="fas fa-map-marker-alt mr-2"></i> Salon Zaz Look, Maroc</span>
-                        </div>
-                    </div>
+            <!-- Tarif Coiffure (Côté droit) -->
+            <a href="#" class="glass-3d aspect-square flex flex-col items-center justify-center p-4 rounded-[2rem] group border-orange-500/20 text-center">
+                <div class="w-14 h-14 icon-box bg-white shadow-lg shadow-orange-900/40 border-2 border-orange-500/30 mb-3">
+                    <img src="https://i.postimg.cc/kgcDtgNH/IMG-9073.jpg" alt="Icône Coiffure" class="w-full h-full object-cover">
                 </div>
-            </div>
-        </div>
-    </section>
+                <span class="font-bold text-sm tracking-wide leading-tight">Tarif<br>Coiffure</span>
+                <span class="text-[8px] text-orange-300 uppercase mt-1">Coupe Femme</span>
+            </a>
 
-    <!-- Footer -->
-    <footer class="py-12 border-t border-white/10 bg-black text-center">
-        <div class="container mx-auto px-6">
-            <div class="text-2xl font-bold tracking-widest gold-text serif mb-6">SALON ZAZ LOOK</div>
-            <div class="flex justify-center space-x-6 mb-8 text-xl">
-                <a href="https://instagram.com/salon_zaz_look" class="hover:text-amber-400"><i class="fab fa-instagram"></i></a>
-                <a href="https://wa.me/21263875803" class="hover:text-amber-400"><i class="fab fa-whatsapp"></i></a>
-                <a href="#" class="hover:text-amber-400"><i class="fab fa-facebook-f"></i></a>
+            <!-- Waze (Placé sous les tarifs) -->
+            <a href="https://waze.com/ul/hevfwcysr8" 
+               target="_blank" 
+               class="glass-3d aspect-square flex flex-col items-center justify-center p-4 rounded-[2rem] group border-cyan-500/20 text-center">
+                <div class="w-14 h-14 icon-box bg-white shadow-lg shadow-cyan-900/40 border-2 border-cyan-500/30 mb-3">
+                    <img src="https://i.postimg.cc/yNsY14wP/IMG-9071.png" alt="Icône Waze" class="w-full h-full object-cover">
+                </div>
+                <span class="font-bold text-sm tracking-wide">Waze</span>
+                <span class="text-[8px] text-cyan-300 uppercase mt-1">Localisation</span>
+            </a>
+
+            <!-- Avis Google (Placé sous les tarifs) -->
+            <a href="https://www.google.com/search?client=safari&hs=GOWp&sca_esv=1fae8eb1784a3388&hl=fr-ma&q=avis+sur+salon+zaz+look&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOR58J2hRZzFqT8cAxDaIUjqnQ2EbRVKudyKoa0t2Vg4xz-Jw3QMulE-CZLGj15VaZUo6kHtzsCrE2HlPxKdmrmlT-1Qg&sa=X&ved=2ahUKEwjwpO6Ym6CTAxVLpCcCHR22EvcQk8gLegQIHBAB&ictx=1" 
+               target="_blank" 
+               class="glass-3d aspect-square flex flex-col items-center justify-center p-4 rounded-[2rem] group border-yellow-500/20 text-center">
+                <div class="w-14 h-14 icon-box bg-white shadow-md border-2 border-yellow-500/30 mb-3">
+                    <img src="https://i.postimg.cc/HWqmW1Mp/IMG-9067.jpg" alt="Icône Avis Google" class="w-full h-full object-cover">
+                </div>
+                <span class="block font-bold text-sm text-white">Avis Google</span>
+                <div class="flex mt-1">
+                    <i data-lucide="star" class="w-2 h-2 text-yellow-500 fill-yellow-500"></i>
+                    <i data-lucide="star" class="w-2 h-2 text-yellow-500 fill-yellow-500"></i>
+                    <i data-lucide="star" class="w-2 h-2 text-yellow-500 fill-yellow-500"></i>
+                    <i data-lucide="star" class="w-2 h-2 text-yellow-500 fill-yellow-500"></i>
+                    <i data-lucide="star" class="w-2 h-2 text-yellow-500 fill-yellow-500"></i>
+                </div>
+            </a>
+
+            <!-- Instagram -->
+            <a href="https://instagram.com/salon_zaz_look" target="_blank" class="glass-3d flex flex-col items-center justify-center p-6 rounded-[2rem] group text-center border-pink-500/20">
+                <div class="w-12 h-12 icon-box insta-gradient text-white mb-3 shadow-lg">
+                    <i data-lucide="instagram" class="w-6 h-6"></i>
+                </div>
+                <span class="font-bold text-sm">Instagram</span>
+            </a>
+
+            <!-- WiFi Gratuit -->
+            <div class="glass-3d flex flex-col items-center justify-center p-6 rounded-[2rem] group text-center cursor-default">
+                <div class="w-12 h-12 icon-box bg-gradient-to-br from-blue-400 to-blue-700 text-white mb-3 shadow-lg shadow-blue-900/40">
+                    <i data-lucide="wifi" class="w-6 h-6"></i>
+                </div>
+                <span class="font-bold text-sm">WiFi Gratuit</span>
             </div>
-            <p class="text-gray-500 text-xs uppercase tracking-widest">&copy; 2025 Salon Zaz Look. Tous droits réservés.</p>
+
         </div>
-    </footer>
+
+        <!-- Pied de page -->
+        <div class="mt-16 text-center">
+            <div class="h-[1px] w-1/4 bg-gradient-to-r from-transparent via-gray-700 to-transparent mx-auto mb-6"></div>
+            <p class="text-gray-600 text-[10px] tracking-[0.5em] uppercase font-bold">Salon Zaz Look • Casablanca • 2026</p>
+        </div>
+    </div>
 
     <script>
-        // Navbar scroll effect
-        window.addEventListener('scroll', () => {
-            const nav = document.getElementById('navbar');
-            if (window.scrollY > 50) {
-                nav.classList.add('nav-scrolled');
-            } else {
-                nav.classList.remove('nav-scrolled');
-            }
-        });
+        // Initialisation des icônes Lucide
+        lucide.createIcons();
 
-        // Mobile Menu Toggle
-        const menuBtn = document.getElementById('menu-btn');
-        const closeBtn = document.getElementById('close-btn');
-        const mobileMenu = document.getElementById('mobile-menu');
-        const mobileLinks = document.querySelectorAll('.mobile-link');
-
-        menuBtn.addEventListener('click', () => {
-            mobileMenu.classList.remove('hidden');
-        });
-
-        closeBtn.addEventListener('click', () => {
-            mobileMenu.classList.add('hidden');
-        });
-
-        mobileLinks.forEach(link => {
-            link.addEventListener('click', () => {
-                mobileMenu.classList.add('hidden');
+        // Effet de parallaxe 3D suivant le mouvement de la souris (Bureau)
+        document.addEventListener('mousemove', (e) => {
+            const cards = document.querySelectorAll('.glass-3d');
+            const x = (window.innerWidth / 2 - e.pageX) / 60;
+            const y = (window.innerHeight / 2 - e.pageY) / 60;
+            
+            cards.forEach(card => {
+                card.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
             });
         });
     </script>
