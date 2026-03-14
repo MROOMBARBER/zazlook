@@ -18,18 +18,33 @@
 
         .serif { font-family: 'Playfair Display', serif; }
 
-        /* Animation de flottaison du logo principal */
+        /* --- Animations Clés --- */
         @keyframes float {
             0%, 100% { transform: translateY(0px); }
-            50% { transform: translateY(-10px); }
+            50% { transform: translateY(-8px); }
         }
 
-        /* Animation de balayage doré sur le texte (Shimmer) */
         @keyframes shimmer {
             0% { background-position: -200% center; }
             100% { background-position: 200% center; }
         }
 
+        @keyframes pulse-subtle {
+            0%, 100% { transform: scale(1); opacity: 1; }
+            50% { transform: scale(1.05); opacity: 0.8; }
+        }
+
+        @keyframes icon-bounce {
+            0%, 100% { transform: translateY(0); }
+            50% { transform: translateY(-3px); }
+        }
+
+        @keyframes shine {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        /* --- Classes d'Animation --- */
         .animate-float { animation: float 4s ease-in-out infinite; }
         
         .animate-text-shimmer {
@@ -40,165 +55,174 @@
             background-clip: text;
             animation: shimmer 4s linear infinite;
         }
+
+        .icon-pulse { animation: pulse-subtle 3s ease-in-out infinite; }
+        .icon-bounce { animation: icon-bounce 2s ease-in-out infinite; }
         
         /* Design des cartes en verre 3D (Glassmorphism) */
         .glass-3d {
             background: rgba(255, 255, 255, 0.05);
-            backdrop-filter: blur(15px);
+            backdrop-filter: blur(12px);
             border: 1px solid rgba(255, 255, 255, 0.1);
-            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5), inset 0 1px 1px rgba(255, 255, 255, 0.1);
+            box-shadow: 0 8px 24px rgba(0, 0, 0, 0.4), inset 0 1px 1px rgba(255, 255, 255, 0.05);
             transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .glass-3d::after {
+            content: "";
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 50%;
+            height: 100%;
+            background: linear-gradient(to right, transparent, rgba(255, 255, 255, 0.05), transparent);
+            transform: skewX(-25deg);
+            transition: 0.75s;
+        }
+
+        .glass-3d:hover::after {
+            left: 150%;
         }
 
         .glass-3d:hover {
-            transform: translateY(-8px) scale(1.02) rotateX(5deg);
+            transform: translateY(-5px) scale(1.02) rotateX(4deg);
             background: rgba(255, 255, 255, 0.08);
             border-color: rgba(212, 175, 55, 0.4);
-            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.7), 0 0 15px rgba(212, 175, 55, 0.2);
+            box-shadow: 0 15px 35px rgba(0, 0, 0, 0.7);
         }
 
-        /* Boîtes d'icônes avec effet de rotation au survol */
+        /* Boîtes d'icônes compactes et animées */
         .icon-box {
             display: flex;
             align-items: center;
             justify-content: center;
-            border-radius: 16px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.3);
-            transition: transform 0.5s ease;
+            border-radius: 14px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.4);
+            transition: transform 0.6s cubic-bezier(0.34, 1.56, 0.64, 1);
             overflow: hidden;
+            background: white; /* Fond par défaut pour les images */
         }
         
-        .glass-3d:hover .icon-box { transform: rotateY(180deg); }
+        .glass-3d:hover .icon-box { 
+            transform: scale(1.1) rotate(5deg);
+        }
 
-        /* Couleurs spécifiques aux réseaux et marques */
         .insta-gradient { background: radial-gradient(circle at 30% 107%, #fdf497 0%, #fdf497 5%, #fd5949 45%, #d6249f 60%, #285AEB 90%); }
         .wa-color { background: #25D366; }
     </style>
 </head>
-<body class="min-h-screen flex items-center justify-center p-4">
+<body class="min-h-screen flex items-center justify-center p-2">
 
-    <div class="w-full max-w-md py-10">
-        <!-- En-tête avec Logo Animé -->
-        <div class="text-center mb-12">
+    <div class="w-full max-w-sm py-2">
+        <!-- En-tête compact -->
+        <div class="text-center mb-6">
             <div class="relative inline-block animate-float">
-                <div class="w-28 h-28 rounded-full p-1 bg-gradient-to-tr from-[#b8860b] via-[#f9e2af] to-[#d4af37] shadow-[0_0_30px_rgba(212,175,55,0.3)]">
-                    <div class="w-full h-full rounded-full bg-black overflow-hidden border-2 border-black flex items-center justify-center">
+                <div class="w-20 h-20 rounded-full p-0.5 bg-gradient-to-tr from-[#b8860b] via-[#f9e2af] to-[#d4af37] shadow-[0_0_20px_rgba(212,175,55,0.4)]">
+                    <div class="w-full h-full rounded-full bg-black overflow-hidden border border-black flex items-center justify-center">
                         <img src="https://i.postimg.cc/9f6RtNS9/photo-5884097001182399774-y.jpg" 
                              alt="Logo Salon Zaz Look" 
                              class="w-full h-full object-cover">
                     </div>
                 </div>
-                <!-- Indicateur de statut en ligne pulsant -->
-                <div class="absolute -bottom-1 -right-1 bg-green-500 w-6 h-6 rounded-full border-4 border-[#0a0a0a] shadow-lg animate-pulse"></div>
+                <div class="absolute bottom-0 right-0 bg-green-500 w-4 h-4 rounded-full border-2 border-[#0a0a0a] shadow-lg animate-pulse"></div>
             </div>
             
-            <!-- Titre sur une seule ligne avec animation shimmer -->
-            <div class="mt-6 flex justify-center overflow-hidden px-2">
-                <h1 class="serif text-3xl sm:text-4xl lg:text-5xl animate-text-shimmer tracking-widest uppercase text-center leading-tight whitespace-nowrap drop-shadow-lg">
+            <div class="mt-3 flex justify-center overflow-hidden px-1">
+                <h1 class="serif text-2xl sm:text-3xl animate-text-shimmer tracking-widest uppercase leading-tight whitespace-nowrap drop-shadow-lg">
                     SALON ZAZ LOOK
                 </h1>
             </div>
-            <p class="text-gray-400 text-xs mt-3 uppercase tracking-[0.4em] font-light italic">L'Art de la Beauté Femme</p>
+            <p class="text-gray-400 text-[9px] mt-1 uppercase tracking-[0.4em] font-light italic">L'Art de la Beauté Femme</p>
         </div>
 
-        <!-- Grille de Navigation Interactive -->
-        <div class="grid grid-cols-2 gap-5 px-2">
+        <!-- Grille compacte -->
+        <div class="grid grid-cols-2 gap-3 px-1">
             
-            <!-- WhatsApp (Toujours en haut pour le contact prioritaire) -->
-            <a href="https://wa.me/212638753803" target="_blank" class="col-span-2 glass-3d flex items-center p-6 rounded-[2rem] group border-[#25D366]/30">
-                <div class="w-14 h-14 icon-box wa-color text-white shadow-lg shadow-green-900/40">
-                    <svg class="w-7 h-7" viewBox="0 0 24 24" fill="currentColor">
+            <!-- WhatsApp Simo -->
+            <a href="https://wa.me/212638753803" target="_blank" class="glass-3d aspect-square flex flex-col items-center justify-center p-3 rounded-[1.8rem] group border-[#25D366]/20 text-center">
+                <div class="w-11 h-11 icon-box wa-color text-white mb-2 icon-pulse">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
                         <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
                     </svg>
                 </div>
-                <div class="ml-5">
-                    <span class="block font-bold text-lg text-white">WhatsApp</span>
-                    <span class="text-[10px] text-green-300 uppercase tracking-widest font-semibold italic">Contact direct</span>
-                </div>
-                <i data-lucide="chevron-right" class="ml-auto w-5 h-5 text-gray-600 group-hover:text-green-400 transition-colors"></i>
+                <span class="block font-bold text-[11px] text-white">WhatsApp<br>Simo</span>
             </a>
 
-            <!-- Tarifs Esthétique (Côté gauche) -->
-            <a href="#" class="glass-3d aspect-square flex flex-col items-center justify-center p-4 rounded-[2rem] group border-pink-500/20 text-center">
-                <div class="w-14 h-14 icon-box bg-white shadow-lg shadow-pink-900/40 border-2 border-pink-500/30 mb-3">
-                    <img src="https://i.postimg.cc/fRLQBWnj/IMG-9075.jpg" alt="Icône Esthétique" class="w-full h-full object-cover">
+            <!-- WhatsApp Yasser -->
+            <a href="https://wa.me/212691382680" target="_blank" class="glass-3d aspect-square flex flex-col items-center justify-center p-3 rounded-[1.8rem] group border-[#25D366]/20 text-center">
+                <div class="w-11 h-11 icon-box wa-color text-white mb-2 icon-pulse">
+                    <svg class="w-6 h-6" viewBox="0 0 24 24" fill="currentColor">
+                        <path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413Z"/>
+                    </svg>
                 </div>
-                <span class="block font-bold text-sm text-white leading-tight">Tarifs<br>Esthétique</span>
-                <span class="text-[8px] text-pink-300 uppercase tracking-widest mt-1">Soins Beauté</span>
+                <span class="block font-bold text-[11px] text-white">WhatsApp<br>Yasser</span>
             </a>
 
-            <!-- Tarif Coiffure (Côté droit) -->
-            <a href="#" class="glass-3d aspect-square flex flex-col items-center justify-center p-4 rounded-[2rem] group border-orange-500/20 text-center">
-                <div class="w-14 h-14 icon-box bg-white shadow-lg shadow-orange-900/40 border-2 border-orange-500/30 mb-3">
-                    <img src="https://i.postimg.cc/kgcDtgNH/IMG-9073.jpg" alt="Icône Coiffure" class="w-full h-full object-cover">
+            <!-- Tarifs Esthétique -->
+            <a href="#" class="glass-3d aspect-square flex flex-col items-center justify-center p-3 rounded-[1.8rem] group border-pink-500/20 text-center">
+                <div class="w-11 h-11 icon-box border border-pink-500/20 mb-2 icon-bounce">
+                    <img src="https://i.postimg.cc/fRLQBWnj/IMG-9075.jpg" alt="Tarifs Esthétique" class="w-full h-full object-cover">
                 </div>
-                <span class="font-bold text-sm tracking-wide leading-tight">Tarif<br>Coiffure</span>
-                <span class="text-[8px] text-orange-300 uppercase mt-1">Coupe Femme</span>
+                <span class="block font-bold text-[11px] text-white leading-tight">Tarifs<br>Esthétique</span>
             </a>
 
-            <!-- Waze (Placé sous les tarifs) -->
-            <a href="https://waze.com/ul/hevfwcysr8" 
-               target="_blank" 
-               class="glass-3d aspect-square flex flex-col items-center justify-center p-4 rounded-[2rem] group border-cyan-500/20 text-center">
-                <div class="w-14 h-14 icon-box bg-white shadow-lg shadow-cyan-900/40 border-2 border-cyan-500/30 mb-3">
-                    <img src="https://i.postimg.cc/yNsY14wP/IMG-9071.png" alt="Icône Waze" class="w-full h-full object-cover">
+            <!-- Tarif Coiffure -->
+            <a href="#" class="glass-3d aspect-square flex flex-col items-center justify-center p-3 rounded-[1.8rem] group border-orange-500/20 text-center">
+                <div class="w-11 h-11 icon-box border border-orange-500/20 mb-2 icon-bounce">
+                    <img src="https://i.postimg.cc/kgcDtgNH/IMG-9073.jpg" alt="Tarif Coiffure" class="w-full h-full object-cover">
                 </div>
-                <span class="font-bold text-sm tracking-wide">Waze</span>
-                <span class="text-[8px] text-cyan-300 uppercase mt-1">Localisation</span>
+                <span class="font-bold text-[11px] text-white leading-tight">Tarif<br>Coiffure</span>
             </a>
 
-            <!-- Avis Google (Placé sous les tarifs) -->
-            <a href="https://www.google.com/search?client=safari&hs=GOWp&sca_esv=1fae8eb1784a3388&hl=fr-ma&q=avis+sur+salon+zaz+look&si=AL3DRZEsmMGCryMMFSHJ3StBhOdZ2-6yYkXd_doETEE1OR-qOR58J2hRZzFqT8cAxDaIUjqnQ2EbRVKudyKoa0t2Vg4xz-Jw3QMulE-CZLGj15VaZUo6kHtzsCrE2HlPxKdmrmlT-1Qg&sa=X&ved=2ahUKEwjwpO6Ym6CTAxVLpCcCHR22EvcQk8gLegQIHBAB&ictx=1" 
-               target="_blank" 
-               class="glass-3d aspect-square flex flex-col items-center justify-center p-4 rounded-[2rem] group border-yellow-500/20 text-center">
-                <div class="w-14 h-14 icon-box bg-white shadow-md border-2 border-yellow-500/30 mb-3">
-                    <img src="https://i.postimg.cc/HWqmW1Mp/IMG-9067.jpg" alt="Icône Avis Google" class="w-full h-full object-cover">
+            <!-- Waze -->
+            <a href="https://waze.com/ul/hevfwcysr8" target="_blank" class="glass-3d aspect-square flex flex-col items-center justify-center p-3 rounded-[1.8rem] group border-cyan-500/20 text-center">
+                <div class="w-11 h-11 icon-box border border-cyan-500/20 mb-2 icon-bounce">
+                    <img src="https://i.postimg.cc/yNsY14wP/IMG-9071.png" alt="Waze" class="w-full h-full object-cover">
                 </div>
-                <span class="block font-bold text-sm text-white">Avis Google</span>
-                <div class="flex mt-1">
-                    <i data-lucide="star" class="w-2 h-2 text-yellow-500 fill-yellow-500"></i>
-                    <i data-lucide="star" class="w-2 h-2 text-yellow-500 fill-yellow-500"></i>
-                    <i data-lucide="star" class="w-2 h-2 text-yellow-500 fill-yellow-500"></i>
-                    <i data-lucide="star" class="w-2 h-2 text-yellow-500 fill-yellow-500"></i>
-                    <i data-lucide="star" class="w-2 h-2 text-yellow-500 fill-yellow-500"></i>
+                <span class="font-bold text-[11px] text-white tracking-wide">Waze</span>
+            </a>
+
+            <!-- Avis Google -->
+            <a href="https://www.google.com/search?..." target="_blank" class="glass-3d aspect-square flex flex-col items-center justify-center p-3 rounded-[1.8rem] group border-yellow-500/20 text-center">
+                <div class="w-11 h-11 icon-box border border-yellow-500/20 mb-2 icon-bounce">
+                    <img src="https://i.postimg.cc/HWqmW1Mp/IMG-9067.jpg" alt="Avis Google" class="w-full h-full object-cover">
                 </div>
+                <span class="block font-bold text-[11px] text-white">Avis Google</span>
             </a>
 
             <!-- Instagram -->
-            <a href="https://instagram.com/salon_zaz_look" target="_blank" class="glass-3d flex flex-col items-center justify-center p-6 rounded-[2rem] group text-center border-pink-500/20">
-                <div class="w-12 h-12 icon-box insta-gradient text-white mb-3 shadow-lg">
+            <a href="https://instagram.com/salon_zaz_look" target="_blank" class="glass-3d aspect-square flex flex-col items-center justify-center p-3 rounded-[1.8rem] group text-center border-pink-500/20">
+                <div class="w-11 h-11 icon-box insta-gradient text-white mb-2 icon-pulse">
                     <i data-lucide="instagram" class="w-6 h-6"></i>
                 </div>
-                <span class="font-bold text-sm">Instagram</span>
+                <span class="font-bold text-[11px]">Instagram</span>
             </a>
 
             <!-- WiFi Gratuit -->
-            <div class="glass-3d flex flex-col items-center justify-center p-6 rounded-[2rem] group text-center cursor-default">
-                <div class="w-12 h-12 icon-box bg-gradient-to-br from-blue-400 to-blue-700 text-white mb-3 shadow-lg shadow-blue-900/40">
+            <div class="glass-3d aspect-square flex flex-col items-center justify-center p-3 rounded-[1.8rem] group text-center cursor-default">
+                <div class="w-11 h-11 icon-box bg-gradient-to-br from-blue-400 to-blue-700 text-white mb-2 icon-pulse">
                     <i data-lucide="wifi" class="w-6 h-6"></i>
                 </div>
-                <span class="font-bold text-sm">WiFi Gratuit</span>
+                <span class="font-bold text-[11px]">WiFi Gratuit</span>
             </div>
 
         </div>
 
-        <!-- Pied de page -->
-        <div class="mt-16 text-center">
-            <div class="h-[1px] w-1/4 bg-gradient-to-r from-transparent via-gray-700 to-transparent mx-auto mb-6"></div>
-            <p class="text-gray-600 text-[10px] tracking-[0.5em] uppercase font-bold">Salon Zaz Look • Casablanca • 2026</p>
+        <!-- Pied de page compact -->
+        <div class="mt-6 text-center">
+            <div class="h-[1px] w-1/5 bg-gradient-to-r from-transparent via-gray-700 to-transparent mx-auto mb-3"></div>
+            <p class="text-gray-600 text-[8px] tracking-[0.4em] uppercase font-bold">Salon Zaz Look • 2026</p>
         </div>
     </div>
 
     <script>
-        // Initialisation des icônes Lucide
         lucide.createIcons();
-
-        // Effet de parallaxe 3D suivant le mouvement de la souris (Bureau)
         document.addEventListener('mousemove', (e) => {
             const cards = document.querySelectorAll('.glass-3d');
-            const x = (window.innerWidth / 2 - e.pageX) / 60;
-            const y = (window.innerHeight / 2 - e.pageY) / 60;
-            
+            const x = (window.innerWidth / 2 - e.pageX) / 75;
+            const y = (window.innerHeight / 2 - e.pageY) / 75;
             cards.forEach(card => {
                 card.style.transform = `rotateY(${x}deg) rotateX(${-y}deg)`;
             });
